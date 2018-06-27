@@ -1,0 +1,12 @@
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\bin\Debug\netcoreapp2.0\WebApplication1.deps.json
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\bin\Debug\netcoreapp2.0\WebApplication1.runtimeconfig.json
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\bin\Debug\netcoreapp2.0\WebApplication1.runtimeconfig.dev.json
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\bin\Debug\netcoreapp2.0\WebApplication1.dll
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\bin\Debug\netcoreapp2.0\WebApplication1.pdb
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\obj\Debug\netcoreapp2.0\WebApplication1.csprojResolveAssemblyReference.cache
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\obj\Debug\netcoreapp2.0\WebApplication1.csproj.CoreCompileInputs.cache
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\obj\Debug\netcoreapp2.0\WebApplication1.AssemblyInfoInputs.cache
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\obj\Debug\netcoreapp2.0\WebApplication1.AssemblyInfo.cs
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\obj\Debug\netcoreapp2.0\WebApplication1.dll
+D:\Year 3\Advanced Databases\WebApp\src\EMRApplication\WebApplication1\obj\Debug\netcoreapp2.0\WebApplication1.pdb

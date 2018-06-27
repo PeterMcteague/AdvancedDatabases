@@ -1,0 +1,113 @@
+﻿@model EMRApplication.Models.PatientVM.InvestigationVM
+@{
+    ViewData["Title"] = "Investigations";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    @if (User.IsInRole("HCP"))
+    {
+        <div class="btn-group">
+            @Html.ActionLink("Add Investigation", "AddInvestigation", "Patient", new { PatientId = Model.PatientId })
+        </div>
+        <hr />
+    }
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>!</th>
+            <th>Name</th>
+            <th>Result</th>
+            <th>Range</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Investigations.Where(i => i.Active == true && i.Approved == true))
+        {
+            <tr>
+                <td>@item.DateTime</td>
+                <td>@item.Flagged</td>
+                <td>@item.Name</td>
+                <td>@item.Result@item.Unit</td>
+                <td>@item.RangeMin - @item.RangeMax</td>
+                <td>
+                    <div class="btn-group">
+                        @Html.ActionLink("Details", "InvestigationDetails", "Patient", new { investigationId = item.Id, patientId = Model.PatientId }, new { @class = "btn btn-info btn-md" })
+
+                        @if (User.IsInRole("HCP"))
+                        {
+                            @using (Html.BeginForm("InvestigationsRemove", "Patient", new { investigationId = item.Id, patientId = Model.PatientId }, FormMethod.Post))
+                            {
+                                <input type="submit" value="Remove" class="btn btn-danger btn-md"/>
+                            }
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <h4>Old investigations</h4>
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>!</th>
+            <th>Name</th>
+            <th>Result</th>
+            <th>Range</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Investigations.Where(i => i.Active == false && i.Approved == true))
+        {
+            <tr>
+                <td>@item.DateTime</td>
+                <td>@item.Flagged</td>
+                <td>@item.Name</td>
+                <td>@item.Result@item.Unit</td>
+                <td>@item.RangeMin - @item.RangeMax</td>
+                <td>
+                    <div class="btn-group">
+                        @Html.ActionLink("Details", "InvestigationDetails", "Patient", new { investigationId = item.Id, patientId = Model.PatientId }, new { @class = "btn btn-info btn-md" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+
+    @if (User.IsInRole("HCP"))
+    {
+        <h4>Unapproved investigations</h4>
+
+        <table class="table table-bordered table-responsive table-hover">
+            <tr>
+                <th>Date</th>
+                <th>!</th>
+                <th>Name</th>
+                <th>Result</th>
+                <th>Range</th>
+            </tr>
+
+            @foreach (var item in Model.Investigations.Where(i => i.Approved == false))
+            {
+                <tr>
+                    <td>@item.DateTime</td>
+                    <td>@item.Flagged</td>
+                    <td>@item.Name</td>
+                    <td>@item.Result@item.Unit</td>
+                    <td>@item.RangeMin - @item.RangeMax</td>
+                </tr>
+            }
+        </table>
+    }
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿@model EMRApplication.Models.PatientVM.EventVM
+@{
+    ViewData["Title"] = "Events";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Date</th>
+        </tr>
+
+        @foreach (var item in Model.Events.Select((value, i) => new { i, value }))
+        {
+            <tr>
+                <td>@Model.Events[item.i].EventType</td>
+                <td>@Model.EventNames[item.i]</td>
+                <td>@Model.EventDates[item.i]</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

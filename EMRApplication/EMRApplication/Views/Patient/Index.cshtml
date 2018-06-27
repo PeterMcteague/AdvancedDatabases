@@ -1,0 +1,92 @@
+﻿@model EMRApplication.Models.PatientVM.PatientConsentVM
+@{
+    ViewData["Title"] = "Patient view comfirmation";
+    Layout = "../Shared/_Layout";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    <h4>@ViewData["Title"]</h4>
+
+    <hr />
+
+    @if (Model.Consent == "green")
+    {
+        <p><font color="#009933">This client has given their consent to seek and share information.</font></p>
+
+    }
+    @if (Model.Consent == "amber")
+    {
+        <p><font color="amber">This client has given their consent to seek and share information, <b>provided they are first contacted , unless the situation is an emergency</b>.</font></p>
+        
+        @if (Model.Email != null || Model.PhoneNumber != null)
+        {
+            <p>They can be contacted at:</p>
+            @if (Model.Email != null)
+            {
+                <p><b>Email: </b> @Model.Email</p>
+            }
+            @if (Model.PhoneNumber != null)
+            {
+                <p><b>Phone: </b> @Model.PhoneNumber</p>
+            }
+        }
+        else
+        {
+            <p>However they have not provided any contact information.</p>
+        }
+    }
+    @if (Model.Consent == "red")
+    {
+        <p><font color="red">The client does not consent to seeking and sharing of information except in emergency situations.</font></p>
+    }
+
+    <hr />
+
+    <p>This system shows prescriptions issued by GP Clinical systems but it will not display handwritten prescriptions.
+    Allergies will only be shown if known and recorded. The patient should always be asked if there's anything new that 
+    should be recorded. It is good practice to check the accuracy of records on the system with the patient.</p>
+
+    
+    <hr />
+
+    <form action="Index" method="post">
+        <div>
+            <label for="Message">Message:</label>
+            @if (Model.Consent == "red")
+            {
+                @Html.ValidationMessageFor(model => model.Message,"Required as patient has red consent indicator")
+                @Html.TextBoxFor(m => m.Message, new { @class = "form-control", required = "required" })
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.Message)
+            }
+        </div>
+        <div>
+            @if (Model.Consent == "red")
+            {
+                <label for="EmergencyBox">Emergency?:</label>
+                @Html.CheckBoxFor(model => model.IsEmergency, new { @disabled = "disabled" })
+            }
+            else
+            {
+                <label for="EmergencyBox">Emergency?:</label>
+                @Html.CheckBoxFor(model => model.IsEmergency)
+            }
+        </div>
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Consent)
+        <div>
+            <input type="submit" value="Submit" />
+        </div>
+    </form>
+
+    <hr />
+</body>
+</html>

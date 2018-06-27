@@ -1,0 +1,29 @@
+﻿@model EMRApplication.Models.PatientVM.AddProblemVM
+@{
+    ViewData["Title"] = "Add Problem";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    <form asp-action="AddProblem">
+        @Html.ValidationMessageFor(model => model.ProblemName)<br />
+        @Html.LabelFor(model => model.ProblemName)
+        @Html.EditorFor(model => model.ProblemName)<br />
+        <input hidden asp-for=@Model.PatientId/>
+        <input hidden asp-for=@Model.PatientName />
+        <input hidden asp-for=@Model.DOB />
+        <input type="submit" />
+    </form>
+</body>
+</html>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

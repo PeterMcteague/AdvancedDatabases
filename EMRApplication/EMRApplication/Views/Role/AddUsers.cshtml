@@ -1,0 +1,41 @@
+﻿@model EMRApplication.Models.RoleViewModels.AddToRoleVM
+@{
+    ViewData["Title"] = "Add Users";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <h4>@ViewData["Title"]</h4>
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.users)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>
+                    @using (Html.BeginForm("AddUsers", "Role", new { roleName = Model.RoleName, userId = item.Id }, FormMethod.Post))
+                    {
+                        <input type="submit" value="Add" class="btn btn-default" />
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="btn-group">
+        <a asp-action="Index">Return</a>
+    </div>
+</body>
+</html>

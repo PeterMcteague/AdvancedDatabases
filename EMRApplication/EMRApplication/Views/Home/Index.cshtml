@@ -1,0 +1,47 @@
+﻿@model IndexVM
+
+@{
+    ViewData["Title"] = "Patient Lookup";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model.Patients == null)
+{
+    <h3>You are not authorized to view patient information.</h3>
+    <p>If you are a HCP please log in to view and edit patient information or if you are a patient please login to view your information.</p>
+}
+else
+{
+    <form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+    </form>
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date Of Birth</th>
+            <th>Consent</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Patients)
+        {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Dob.ToShortDateString()</td>
+                <td>@item.Consent</td>
+                <td><a asp-action="Index" asp-route-id="@item.Id" asp-controller="Patient">View</a></td>
+            </tr>
+        }
+    </table>
+}
+

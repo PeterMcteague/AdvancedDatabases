@@ -1,0 +1,33 @@
+﻿@model EMRApplication.Models.PatientVM.InvestigationDetailViewVM
+@{
+    ViewData["Title"] = "Investigation Details";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    <br>Date of Investigation: @Model.Investigation.DateTime</br>
+    <br>Important: @Model.Investigation.Flagged</br>
+    <br>Investigation name: @Model.Investigation.Name</br>
+    <br>Investigation Result: @Model.Investigation.Result@Model.Investigation.Unit</br>
+    <br>Range: @Model.Investigation.RangeMin - @Model.Investigation.RangeMax</br>
+    <br>Extract Identifier: @Model.Details.ExtractIdentifier
+    <br>Extract Time: @Model.Details.ExtractTime
+    <br>Recorded By: @Model.Details.RecordedBy
+    <br>Recorded By Organisation ID: @Model.Details.RecordedByOrganisationId
+    <br>Recorded By Organisation Name: @Model.Details.RecordedByOrganisationName
+    <br>Recorded By Organisation Role: @Model.Details.RecordedByRole
+    <br>Record Element Identifier: @Model.Details.RecordElementIdentifier
+    <br>SNOMED Code: @Model.Details.SnomedCode
+    <br>Source System ID: @Model.Details.SourceSystemId
+    <br>Source System Type: @Model.Details.SourceSystemType
+</body>
+</html>
+
+<script type="text/javascript" src="~/js/DetailDropdown.js"></script> 

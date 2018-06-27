@@ -1,0 +1,136 @@
+﻿@model EMRApplication.Models.PatientVM.AddInvestigationVM
+@{
+    ViewData["Title"] = "Add Invesigation";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationMessageFor(model => model.Investigation.Name)
+        <br />
+        @Html.LabelFor(model => model.Investigation.Name)
+        <br />
+        @Html.EditorFor(model => model.Investigation.Name)
+        <br />
+        @Html.ValidationMessageFor(model => model.Investigation.DateTime)
+        <br />
+        @Html.LabelFor(model => model.Investigation.DateTime)
+        <br />
+        @Html.EditorFor(model => model.Investigation.DateTime)
+        <br />
+        @Html.ValidationMessageFor(model => model.Investigation.Flagged)
+        <br />
+        @Html.LabelFor(model => model.Investigation.Flagged)
+        <br />
+        @Html.EditorFor(model => model.Investigation.Flagged)
+        <br />
+        @Html.ValidationMessageFor(model => model.Investigation.IsBiochemistry)
+        <br />
+        @Html.LabelFor(model => model.Investigation.IsBiochemistry)
+        <br />
+        @Html.EditorFor(model => model.Investigation.IsBiochemistry)
+        <br />
+        @Html.ValidationMessageFor(model => model.Investigation.RangeMin)
+        <br />
+        @Html.LabelFor(model => model.Investigation.RangeMin)
+        <br />
+        @Html.EditorFor(model => model.Investigation.RangeMin)
+        <br />
+        @Html.ValidationMessageFor(model => model.Investigation.RangeMax)
+        <br />
+        @Html.LabelFor(model => model.Investigation.RangeMax)
+        <br />
+        @Html.EditorFor(model => model.Investigation.RangeMax)
+        <br />
+        @Html.ValidationMessageFor(model => model.Investigation.Result)
+        <br />
+        @Html.LabelFor(model => model.Investigation.Result)
+        <br />
+        @Html.EditorFor(model => model.Investigation.Result)        
+        <br />
+        @Html.ValidationMessageFor(model => model.Investigation.Unit)
+        <br />
+        @Html.LabelFor(model => model.Investigation.Unit)
+        <br />
+        @Html.EditorFor(model => model.Investigation.Unit)
+        <br />
+        <hr />
+        <br />
+        @Html.ValidationMessageFor(model => model.InvestigationDetails.ExtractIdentifier)
+        <br />
+        @Html.LabelFor(model => model.InvestigationDetails.ExtractIdentifier)
+        <br />
+        @Html.EditorFor(model => model.InvestigationDetails.ExtractIdentifier)
+        <br />
+        @Html.ValidationMessageFor(model => model.InvestigationDetails.ExtractTime)
+        <br />
+        @Html.LabelFor(model => model.InvestigationDetails.ExtractTime)
+    <br />
+        @Html.EditorFor(model => model.InvestigationDetails.ExtractTime)
+        <br />
+        @Html.ValidationMessageFor(model => model.InvestigationDetails.RecordedBy)
+        <br />
+        @Html.LabelFor(model => model.InvestigationDetails.RecordedBy)
+        <br />
+        @Html.EditorFor(model => model.InvestigationDetails.RecordedBy)
+        <br />
+        @Html.ValidationMessageFor(model => model.InvestigationDetails.RecordedByOrganisationId)
+        <br />
+        @Html.LabelFor(model => model.InvestigationDetails.RecordedByOrganisationId)
+        <br />
+        @Html.EditorFor(model => model.InvestigationDetails.RecordedByOrganisationId)
+        <br />
+        @Html.ValidationMessageFor(model => model.InvestigationDetails.RecordedByOrganisationName)
+        <br />
+        @Html.LabelFor(model => model.InvestigationDetails.RecordedByOrganisationName)
+        <br />
+        @Html.EditorFor(model => model.InvestigationDetails.RecordedByOrganisationName)
+        <br />
+        @Html.ValidationMessageFor(model => model.InvestigationDetails.RecordedByRole)
+        <br />
+        @Html.LabelFor(model => model.InvestigationDetails.RecordedByRole)
+        <br />
+        @Html.EditorFor(model => model.InvestigationDetails.RecordedByRole)
+        <br />
+        @Html.ValidationMessageFor(model => model.InvestigationDetails.RecordElementIdentifier)
+        <br />
+        @Html.LabelFor(model => model.InvestigationDetails.RecordElementIdentifier)
+        <br />
+        @Html.EditorFor(model => model.InvestigationDetails.RecordElementIdentifier)
+        <br />
+        @Html.ValidationMessageFor(model => model.InvestigationDetails.SnomedCode)
+        <br />
+        @Html.LabelFor(model => model.InvestigationDetails.SnomedCode)
+        <br />
+        @Html.EditorFor(model => model.InvestigationDetails.SnomedCode)
+        <br />
+        @Html.ValidationMessageFor(model => model.InvestigationDetails.SourceSystemId)
+        <br />
+        @Html.LabelFor(model => model.InvestigationDetails.SourceSystemId)
+        <br />
+        @Html.EditorFor(model => model.InvestigationDetails.SourceSystemId)
+        <br />
+        @Html.ValidationMessageFor(model => model.InvestigationDetails.SourceSystemType)
+        <br />
+        @Html.LabelFor(model => model.InvestigationDetails.SourceSystemType)
+        <br />
+        @Html.EditorFor(model => model.InvestigationDetails.SourceSystemType)
+        <br />
+        @Html.HiddenFor(model => model.PatientId)
+        <br />
+        <button type="submit">Add</button>
+    }
+</body>
+</html>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

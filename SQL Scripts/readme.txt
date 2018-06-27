@@ -1,0 +1,1 @@
+Before running these scripts please check that the filenames on lines 7 and 9 exist on your machine or the scripts will fail. 

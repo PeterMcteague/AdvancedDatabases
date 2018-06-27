@@ -1,0 +1,76 @@
+﻿@model EMRApplication.Models.PatientVM.SummaryVM
+@{
+    ViewData["Title"] = "Summary";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    <h3>Problems</h3>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Problem</th>
+        </tr>
+
+        @foreach (var item in Model.Problems)
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.ProblemName</td>
+            </tr>
+        }
+     </table>
+
+    <h3>Medications</h3>
+    <h4>Acute</h4>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Medication</th>
+        </tr>
+
+        @foreach (var item in Model.Medications.Where(b => b.IsRepeat == false))
+        {
+            <tr>
+                <td>@item.Name</td>
+            </tr>
+        }
+    </table>
+    
+    <h4>Repeat</h4>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Medication</th>
+        </tr>
+
+        @foreach (var item in Model.Medications.Where(b => b.IsRepeat == true))
+        {
+            <tr>
+                <td>@item.Name</td>
+            </tr>
+        }
+    </table>
+
+    <h3>Reactions</h3>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Reaction</th>
+        </tr>
+
+        @foreach (var item in Model.Reactions)
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.Name</td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

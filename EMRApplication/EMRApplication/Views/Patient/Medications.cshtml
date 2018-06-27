@@ -1,0 +1,98 @@
+﻿@model EMRApplication.Models.PatientVM.MedicationVM
+@{
+    ViewData["Title"] = "Medications";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    @if (User.IsInRole("HCP"))
+    {
+        <div class="btn-group">
+            @Html.ActionLink("Add Medication", "AddMedication", "Patient", new { PatientId = Model.PatientId })
+        </div>
+    }
+    <hr />
+
+    <h4>Current medications</h4>
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Repeat</th>
+            @if (User.IsInRole("HCP"))
+            {
+                <th></th>
+            }
+        </tr>
+
+        @foreach (var item in Model.Medications.Where(i => i.Active == true && i.Approved == true))
+        {
+            <tr>
+                <td>@item.DateTime</td>
+                <td>@item.Name</td>
+                <td>@item.IsRepeat</td>
+                @if (User.IsInRole("HCP"))
+                {
+                <td>
+                    <div class="btn-group">
+                        @using (Html.BeginForm("MedicationsRemove", "Patient", new { medicationId = item.Id, patientId = Model.PatientId }, FormMethod.Post))
+                        {
+                            <input type="submit" value="Remove" class="btn btn-danger btn-md" />
+                        }
+                    </div>
+                </td>
+                }
+            </tr>
+        }
+    </table>
+
+    <h4>Old medications</h4>
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Repeat</th>
+        </tr>
+
+        @foreach (var item in Model.Medications.Where(i => i.Active == false && i.Approved == true))
+        {
+            <tr>
+                <td>@item.DateTime</td>
+                <td>@item.Name</td>
+                <td>@item.IsRepeat</td>
+            </tr>
+        }
+    </table>
+
+    @if (User.IsInRole("HCP"))
+    {
+        <h4>Unapproved medications</h4>
+
+        <table class="table table-bordered table-responsive table-hover">
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Repeat</th>
+            </tr>
+
+            @foreach (var item in Model.Medications.Where(i => i.Approved == false))
+            {
+                <tr>
+                    <td>@item.DateTime</td>
+                    <td>@item.Name</td>
+                    <td>@item.IsRepeat</td>
+                </tr>
+            }
+        </table>
+    }
+</body>
+</html>

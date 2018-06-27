@@ -1,0 +1,158 @@
+﻿@model EMRApplication.Models.PatientVM.ApprovalVM
+@{
+    ViewData["Title"] = "Approval Queue";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    <h4>Investigations</h4>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>!</th>
+            <th>Name</th>
+            <th>Result</th>
+            <th>Range</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.Investigations.Where(i => i.Active == true))
+        {
+            <tr>
+                <td>@item.DateTime</td>
+                <td>@item.Flagged</td>
+                <td>@item.Name</td>
+                <td>@item.Result@item.Unit</td>
+                <td>@item.RangeMin - @item.RangeMax</td>
+                <td>
+                    <div class="btn-group">
+                        @Html.ActionLink("Details", "InvestigationDetails", "Patient", new { investigationId = item.Id, patientId = Model.PatientId }, new { @class = "btn btn-info btn-md" })
+
+                        @using (Html.BeginForm("Approve", "Patient", new { id = item.Id, patientId = Model.PatientId, type = "investigations" }, FormMethod.Post))
+                        {
+                            <input type="submit" value="Approve" class="btn btn-danger btn-md" />
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <hr />
+
+    <h4>Referrals</h4>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <td>Encounter</td>
+            <th>Referred by</th>
+            <th>Referred to</th>
+            <th>Reason</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Referrals)
+        {
+            <tr>
+                <td>@item.DateTime</td>
+                <td>@item.Encounter</td>
+                <td>@item.ReferredBy</td>
+                <td>@item.RefferedToRole @item.ReferredTo at @item.RefferedToLocation</td>
+                <td>@item.Reason</td>
+                <td>
+                    <div class="btn-group">
+                        @using (Html.BeginForm("Approve", "Patient", new { id = item.Id, patientId = Model.PatientId, type = "referrals" }, FormMethod.Post))
+                        {
+                            <input type="submit" value="Approve" class="btn btn-danger btn-md" />
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <h4>Reactions</h4>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Reactions)
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.Name</td>
+                <td>
+                    <div class="btn-group">
+                        @using (Html.BeginForm("Approve", "Patient", new { id = item.Id, patientId = Model.PatientId, type = "reactions" }, FormMethod.Post))
+                        {
+                            <input type="submit" value="Approve" class="btn btn-danger btn-md" />
+                        }
+                    </div>
+                </td>
+            </tr>
+         }
+    </table>
+
+    <h4>Problems</h4>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Problems)
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.ProblemName</td>
+                <td>
+                    <div class="btn-group">
+                        @using (Html.BeginForm("Approve", "Patient", new { id = item.Id, patientId = Model.PatientId, type = "problems" }, FormMethod.Post))
+                        {
+                            <input type="submit" value="Approve" class="btn btn-danger btn-md" />
+                        }
+                    </div>
+                </td>
+
+            </tr>
+        }
+    </table>
+
+    <h4>Medications</h4>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Repeat</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Medications)
+        {
+            <tr>
+                <td>@item.DateTime</td>
+                <td>@item.Name</td>
+                <td>@item.IsRepeat</td>
+                <td>
+                    <div class="btn-group">
+                        @using (Html.BeginForm("Approve", "Patient", new { id = item.Id, patientId = Model.PatientId, type = "medication" }, FormMethod.Post))
+                        {
+                            <input type="submit" value="Approve" class="btn btn-danger btn-md" />
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

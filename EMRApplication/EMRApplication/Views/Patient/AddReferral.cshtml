@@ -1,0 +1,50 @@
+﻿@model EMRApplication.Models.PatientVM.AddReferralVM
+@{
+    ViewData["Title"] = "Add Referral";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    <form asp-action="AddReferral">
+        @Html.ValidationMessageFor(model => model.Referral.Encounter)<br />
+        @Html.LabelFor(model => model.Referral.Encounter)
+        @Html.EditorFor(model => model.Referral.Encounter)
+        <br />
+        @Html.ValidationMessageFor(model => model.Referral.Reason)<br />
+        @Html.LabelFor(model => model.Referral.Reason)
+        @Html.EditorFor(model => model.Referral.Reason)
+        <br />
+        @Html.ValidationMessageFor(model => model.Referral.ReferredBy)<br />
+        @Html.LabelFor(model => model.Referral.ReferredBy)
+        @Html.EditorFor(model => model.Referral.ReferredBy)
+        <br />
+        @Html.ValidationMessageFor(model => model.Referral.ReferredTo)<br />
+        @Html.LabelFor(model => model.Referral.ReferredTo)
+        @Html.EditorFor(model => model.Referral.ReferredTo)
+        <br />
+        @Html.ValidationMessageFor(model => model.Referral.RefferedToLocation)<br />
+        @Html.LabelFor(model => model.Referral.RefferedToLocation)
+        @Html.EditorFor(model => model.Referral.RefferedToLocation)
+        <br />
+        @Html.ValidationMessageFor(model => model.Referral.RefferedToRole)<br />
+        @Html.LabelFor(model => model.Referral.RefferedToRole)
+        @Html.EditorFor(model => model.Referral.RefferedToRole)
+        <br />
+        <input hidden asp-for=@Model.PatientId />
+        <input hidden asp-for=@Model.PatientName />
+        <input hidden asp-for=@Model.DOB />
+        <input type="submit" />
+    </form>
+</body>
+</html>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

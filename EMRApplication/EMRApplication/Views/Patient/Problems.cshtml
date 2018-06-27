@@ -1,0 +1,90 @@
+﻿@model EMRApplication.Models.PatientVM.ProblemVM
+@{
+    ViewData["Title"] = "Problems";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    @if (User.IsInRole("HCP"))
+    {
+        <div class="btn-group">
+            @Html.ActionLink("Add Problem", "AddProblem", "Patient", new { PatientId = Model.PatientId })
+        </div>
+        <hr />
+    }
+
+    <h4>Current problems</h4>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            @if (User.IsInRole("HCP"))
+            {
+            <th></th>
+            }
+        </tr>
+
+        @foreach (var item in Model.Problems.Where(p => p.Active == true && p.Approved == true))
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.ProblemName</td>
+
+                @if (User.IsInRole("HCP"))
+                {
+                    <td>
+                        @using (Html.BeginForm("Problems", "Patient", new { ProblemId = item.Id, PatientId = Model.PatientId }, FormMethod.Post))
+                        {
+                            <input type="submit" value="Remove" class="btn btn-default" />
+                        }
+                    </td>
+                }
+
+            </tr>
+        }
+    </table>
+
+    <h4>Old problems</h4>
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+        </tr>
+
+        @foreach (var item in Model.Problems.Where(p => p.Active == false && p.Approved == true))
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.ProblemName</td>
+            </tr>
+        }
+    </table>
+
+    @if (User.IsInRole("HCP"))
+    {
+        <h4>Unapproved problems</h4>
+
+        <table class="table table-bordered table-responsive table-hover">
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+            </tr>
+
+            @foreach (var item in Model.Problems.Where(p => p.Approved == false))
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.ProblemName</td>
+                </tr>
+            }
+        </table>
+    }
+</body>
+</html>

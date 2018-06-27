@@ -1,0 +1,49 @@
+﻿@model IEnumerable<EMRApplication.Models.RoleViewModels.Role>
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <h4>@ViewData["Title"]</h4>
+
+    <div class="btn-group">
+        <a asp-action="Create">Create Role</a>
+    </div>
+
+    <hr />
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Role Name</th>
+            <th>Number of Users</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RoleName</td>
+                <td>@item.NumberOfUsers</td>
+                <td>
+                    <a asp-action="AddUsers" asp-route-id="@item.RoleName">Add Users</a>
+                    <i>|</i>
+                    <a asp-action="RemoveUsers" asp-route-id="@item.RoleName">Remove Users</a>
+                    @if (item.NumberOfUsers == 0)
+                    {
+                        <i>|</i>
+                        <form asp-action="Delete" asp-controller="Role">
+                            <button name="delete" type="submit" asp-controller="role" asp-action="Delete" asp-route-id=@item.Id>Delete</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

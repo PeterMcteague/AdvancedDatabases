@@ -1,0 +1,72 @@
+﻿@model EMRApplication.Models.PatientVM.ReferralsVM
+@{
+    ViewData["Title"] = "Referrals";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    @if (User.IsInRole("HCP"))
+    {
+        <div class="btn-group">
+            @Html.ActionLink("Add Referral", "AddReferral", "Patient", new { PatientId = Model.PatientId })
+        </div>
+
+        <hr />
+    }
+
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <td>Encounter</td>
+            <th>Referred by</th>
+            <th>Referred to</th>
+            <th>Reason</th>
+        </tr>
+
+        @foreach (var item in Model.Referrals.Where(i => i.Approved))
+        {
+            <tr>
+                <td>@item.DateTime</td>
+                <td>@item.Encounter</td>
+                <td>@item.ReferredBy</td>
+                <td>@item.RefferedToRole @item.ReferredTo at @item.RefferedToLocation</td>
+                <td>@item.Reason</td>
+            </tr>
+        }
+    </table>
+
+    @if (User.IsInRole("HCP"))
+    {
+        <h4>Unapproved referrals</h4>
+
+        <table class="table table-bordered table-responsive table-hover">
+            <tr>
+                <th>Date</th>
+                <td>Encounter</td>
+                <th>Referred by</th>
+                <th>Referred to</th>
+                <th>Reason</th>
+            </tr>
+
+            @foreach (var item in Model.Referrals.Where(i => i.Approved == false))
+            {
+                <tr>
+                    <td>@item.DateTime</td>
+                    <td>@item.Encounter</td>
+                    <td>@item.ReferredBy</td>
+                    <td>@item.RefferedToRole @item.ReferredTo at @item.RefferedToLocation</td>
+                    <td>@item.Reason</td>
+                </tr>
+            }
+        </table>
+    }
+</body>
+</html>

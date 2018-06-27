@@ -1,0 +1,93 @@
+﻿@model EMRApplication.Models.PatientVM.ReactionsVM
+@{
+    ViewData["Title"] = "Reactions";
+    ViewData["Name"] = Model.PatientName;
+    ViewData["DOB"] = Model.DOB.ToShortDateString();
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"].</title>
+</head>
+<body>
+    @if (User.IsInRole("HCP"))
+    {
+        <div class="btn-group">
+            @Html.ActionLink("Add Reaction", "AddReaction", "Patient", new { PatientId = Model.PatientId })
+        </div>
+    }
+
+    <hr />
+
+    <h4>Current reactions</h4>
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            @if (User.IsInRole("HCP"))
+            {
+                <th></th>
+            }
+        </tr>
+
+        @foreach (var item in Model.Reactions.Where(i => i.Active == true && i.Approved == true))
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.Name</td>
+                @if (User.IsInRole("HCP"))
+                {
+                    <td>
+                        <div class="btn-group">
+                            @using (Html.BeginForm("ReactionsRemove", "Patient", new { reactionId = item.Id, patientId = Model.PatientId }, FormMethod.Post))
+                            {
+                                <input type="submit" value="Remove" class="btn btn-danger btn-md" />
+                            }
+                        </div>
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+
+    <h4>Old reactions</h4>
+
+    <table class="table table-bordered table-responsive table-hover">
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+        </tr>
+
+        @foreach (var item in Model.Reactions.Where(i => i.Active == false && i.Approved == true))
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.Name</td>
+            </tr>
+        }
+    </table>
+
+    @if (User.IsInRole("HCP"))
+    {
+        <h4>Unapproved reactions</h4>
+
+        <table class="table table-bordered table-responsive table-hover">
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+            </tr>
+
+            @foreach (var item in Model.Reactions.Where(i => i.Approved == false))
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.Name</td>
+                </tr>
+            }
+        </table>
+    }
+</body>
+</html>
